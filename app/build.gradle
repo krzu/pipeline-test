@@ -31,4 +31,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     // hockeyapp
     compile 'net.hockeyapp.android:HockeySDK:4.1.4'
+    // testfairy
+    compile 'testfairy:testfairy-android-sdk:1.5.0@aar'
 }

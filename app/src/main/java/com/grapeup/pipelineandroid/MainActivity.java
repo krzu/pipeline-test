@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.testfairy.TestFairy;
+
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
 
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         checkForUpdates();
+        TestFairy.begin(this, "ce7430868a0d8694c2a89a6b37b1b8dff6e8f08a");
     }
 
     @Override
