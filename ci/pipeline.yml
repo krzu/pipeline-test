@@ -1,0 +1,15 @@
+---
+resources:
+- name: pipeline-test-resource
+  type: git
+  source:
+    uri: https://github.com/krzu/pipeline-test.git
+
+jobs:
+- name: pipeline-test-job
+  public: true
+  plan:
+  - get: pipeline-test-resource
+    trigger: true
+  - task: pipeline-test-build
+    file: pipeline-test-resource/ci/build.yml
