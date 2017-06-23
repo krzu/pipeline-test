@@ -11,7 +11,7 @@ inputs:
 run:
   path: sh
   args:
-  - -ex
+  - -exc
   - |
     export TERM=${TERM:-dumb}
     export ANDROID_HOME="$PWD/android-sdk-linux"
