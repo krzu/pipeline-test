@@ -2,4 +2,4 @@
 
 export TERM=${TERM:-dumb}
 cd pipeline-test-resource
-./gradlew --no-daemon build
+#./gradlew --no-daemon build
