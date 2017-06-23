@@ -1,12 +1,18 @@
 ---
 platform: linux
-
 image_resource:
   type: docker-image
-  source: {repository: java, tag: openjdk-8}
-
+  source:
+    repository: xaethos/android-build
+    tag: no-sdk
 inputs:
-- name: pipeline-test-resource
-
+ - name: android-sdk-linux
+ - name: project-source
 run:
-  path: pipeline-test-resource/ci/build.sh
+  path: sh
+  args:
+    - -euxc
+    - >-
+    TERM=screen-256color
+    ANDROID_HOME="$PWD/android-sdk-linux"
+    project-source/gradlew --project-dir=project-source :app:build

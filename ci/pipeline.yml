@@ -1,15 +1,27 @@
 ---
-resources:
-- name: pipeline-test-resource
-  type: git
-  source:
-    uri: https://github.com/krzu/pipeline-test.git
+resource_types:
+  - name: android-sdk
+    type: docker-image
+    source: {repository: xaethos/android-sdk-resource}
 
+resources:
+ - name: android-sdk-linux
+    type: android-sdk
+    source:
+      components:
+        - android-25
+        - build-tools-25.0.3
+        - extra-android-m2repository
+ - name: project-source
+    type: git
+    source:
+      uri: https://github.com/krzu/pipeline-test.git
+      branch: master
 jobs:
-- name: pipeline-test-job
-  public: true
-  plan:
-  - get: pipeline-test-resource
-    trigger: true
-  - task: pipeline-test-build
-    file: pipeline-test-resource/ci/build.yml
+ - name: build
+   public: true
+   plan:
+    - get: android-sdk-linux
+    - get: project-source
+    - task: build
+      file: project-source/ci/build.yml
