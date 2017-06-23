@@ -9,10 +9,4 @@ inputs:
  - name: android-sdk-linux
  - name: project-source
 run:
-  path: sh
-  args:
-    - -euxc
-    - >-
-    TERM=screen-256color
-    ANDROID_HOME="$PWD/android-sdk-linux"
-    project-source/gradlew --project-dir=project-source :app:build
+  path: project-source/ci/build.sh

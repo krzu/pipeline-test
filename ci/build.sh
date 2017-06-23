@@ -1,5 +1,6 @@
 #!/bin/bash
 
 export TERM=${TERM:-dumb}
-cd pipeline-test-resource
+export ANDROID_HOME="$PWD/android-sdk-linux"
+cd project-source
 ./gradlew build
