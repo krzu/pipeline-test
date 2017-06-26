@@ -2,7 +2,7 @@
 resource_types:
   - name: android-sdk
     type: docker-image
-    source: {repository: krzu/android-sdk-resource}
+    source: {repository: xaethos/android-sdk-resource}
   - name: hockey
     type: docker-image
     source:
