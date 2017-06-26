@@ -10,6 +10,7 @@ inputs:
  - name: project-source
 outputs:
  - name: test-output
+   path: test-output-src/
 run:
   path: sh
   args:
