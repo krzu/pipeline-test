@@ -38,4 +38,5 @@ jobs:
         file: project-source/ci/build.yml
       - put: hockey
         params:
-          path: app.apk
+          path: build-output/app.apk
+          downloadable: true

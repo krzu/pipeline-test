@@ -16,21 +16,14 @@ run:
   - -exc
   - |
     export TERM=${TERM:-dumb}
+    # accept all Android-related licenses
     export ANDROID_HOME="$PWD/android-sdk-linux"
     mkdir "$ANDROID_HOME/licenses"
     echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-    pwd
-    ls
+    # inovke gradle build
     cd project-source
+    # TODO: is this necessary?
     chmod 777 gradlew
-    mkdir ../../put
-    ls ../..
     ./gradlew build
-    pwd
-    ls
+    # copy the .apk artifact to shared output so it can be pushed to hockey app in next step
     cp app/build/outputs/apk/app-debug.apk ../build-output/app.apk
-    # cp app/build/outputs/apk/app-debug.apk ../../put/app.apk
-    #cd "$PWD"
-    #cd ../put
-    #cp project-source/app/build/outputs/apk/app-debug.apk app.apk
-    #ls
