@@ -30,8 +30,10 @@ run:
     ls ../../put
     cd ..
     pwd
+    ls
     cd ..
     pwd
+    ls
     #cd "$PWD"
     #cd ../put
     #cp project-source/app/build/outputs/apk/app-debug.apk app.apk
