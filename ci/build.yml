@@ -21,6 +21,7 @@ run:
     ls
     cd project-source
     chmod 777 gradlew
+    mkdir ../../put
     ./gradlew build
     pwd
     ls
