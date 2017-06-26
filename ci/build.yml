@@ -23,4 +23,7 @@ run:
     ./gradlew build
     ls
     cp app/build/outputs/apk/app-debug.apk app.apk
+    cd "$PWD"
+    cd ../put
+    cp project-source/app/build/outputs/apk/app-debug.apk app.apk
     ls

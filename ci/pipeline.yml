@@ -38,4 +38,4 @@ jobs:
         file: project-source/ci/build.yml
       - put: hockey
         params:
-          path: build/app.apk
+          path: app.apk
