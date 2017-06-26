@@ -8,6 +8,8 @@ image_resource:
 inputs:
  - name: android-sdk-linux
  - name: project-source
+outputs:
+ - name: build-output
 run:
   path: sh
   args:
@@ -26,14 +28,8 @@ run:
     ./gradlew build
     pwd
     ls
-    cp app/build/outputs/apk/app-debug.apk ../../put/app.apk
-    ls ../../put
-    cd ..
-    pwd
-    ls
-    cd ..
-    pwd
-    ls
+    cp app/build/outputs/apk/app-debug.apk build-output/app.apk
+    # cp app/build/outputs/apk/app-debug.apk ../../put/app.apk
     #cd "$PWD"
     #cd ../put
     #cp project-source/app/build/outputs/apk/app-debug.apk app.apk
