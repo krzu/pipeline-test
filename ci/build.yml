@@ -8,6 +8,8 @@ image_resource:
 inputs:
  - name: android-sdk-linux
  - name: project-source
+outputs:
+ - name: test-output
 run:
   path: sh
   args:
@@ -19,5 +21,5 @@ run:
     echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
     cd project-source
     chmod 777 gradlew
-    ./gradlew build
+    # ./gradlew build
     touch test-output-src/test-app.apk
