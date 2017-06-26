@@ -28,6 +28,10 @@ run:
     ls
     cp app/build/outputs/apk/app-debug.apk ../../put/app.apk
     ls ../../put
+    cd ..
+    pwd
+    cd ..
+    pwd
     #cd "$PWD"
     #cd ../put
     #cp project-source/app/build/outputs/apk/app-debug.apk app.apk
