@@ -21,11 +21,11 @@ run:
     ls
     cd project-source
     chmod 777 gradlew
-    # ./gradlew build
+    ./gradlew build
     pwd
     ls
-    cp app/build/outputs/apk/app-debug.apk app.apk
-    cd "$PWD"
-    cd ../put
-    cp project-source/app/build/outputs/apk/app-debug.apk app.apk
-    ls
+    cp app/build/outputs/apk/app-debug.apk ../../put/app.apk
+    #cd "$PWD"
+    #cd ../put
+    #cp project-source/app/build/outputs/apk/app-debug.apk app.apk
+    #ls
