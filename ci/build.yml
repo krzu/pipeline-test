@@ -23,4 +23,5 @@ run:
     cd project-source
     chmod 777 gradlew
     ./gradlew build
-    cp app/build/outputs/apk/app-debug.apk project-source/app.apk
+    ls
+    cp app/build/outputs/apk/app-debug.apk app.apk
