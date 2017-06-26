@@ -2,26 +2,40 @@
 resource_types:
   - name: android-sdk
     type: docker-image
-    source: {repository: xaethos/android-sdk-resource}
+    source: {repository: krzu/android-sdk-resource}
+  - name: hockey
+    type: docker-image
+    source:
+      repository: seadowg/hockey-resource
+      tag: 0.1.0
 
 resources:
- - name: android-sdk-linux
-   type: android-sdk
-   source:
-     components:
-       - android-25
-       - build-tools-25.0.3
-       - extra-android-m2repository
- - name: project-source
-   type: git
-   source:
+  - name: android-sdk-linux
+    type: android-sdk
+    source:
+      components:
+        - android-25
+        - build-tools-25.0.3
+        - extra-android-m2repository
+  - name: project-source
+    type: git
+    source:
       uri: https://github.com/krzu/pipeline-test.git
       branch: master
+  - name: hockey
+    type: hockey
+    source:
+      app_id: 67bd033133404e37b336bd6bbb8b9b1f
+      token: b8d1ffde9f9e4a18923b02dd5a8560ab
+ 
 jobs:
- - name: build
-   public: true
-   plan:
-    - get: android-sdk-linux
-    - get: project-source
-    - task: build
-      file: project-source/ci/build.yml
+  - name: build-and-deploy
+    public: true
+    plan:
+      - get: android-sdk-linux
+      - get: project-source
+      - task: build
+        file: project-source/ci/build.yml
+      - put: hockey
+        params:
+          path: package/app.apk
