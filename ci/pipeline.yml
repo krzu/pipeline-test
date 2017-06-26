@@ -35,10 +35,7 @@ jobs:
       - get: android-sdk-linux
       - get: project-source
       - task: build
-        outputs:
-        - name: test-output
-          path: test-output-src/
         file: project-source/ci/build.yml
       - put: hockey
         params:
-          path: test-output/test-app.apk
+          path: build/app.apk
