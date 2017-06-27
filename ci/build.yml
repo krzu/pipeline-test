@@ -23,7 +23,7 @@ run:
     # inovke gradle build
     cd project-source
     # TODO: is this necessary?
-    chmod 777 gradlew
+    chmod +x gradlew
     ./gradlew build
     # copy the .apk artifact to shared output so it can be pushed to hockey app in next step
     cp app/build/outputs/apk/app-debug.apk ../build-output/app.apk
