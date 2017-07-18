@@ -8,6 +8,10 @@ resource_types:
     source:
       repository: seadowg/hockey-resource
       tag: 0.1.0
+  - name: gcs-resource
+    type: docker-image
+    source:
+      repository: frodenas/gcs-resource
 
 resources:
   - name: android-sdk-linux
@@ -24,6 +28,19 @@ resources:
     source:
       app_id: ((hockey-app-api-key))
       token: ((hockey-app-token))
+  - name: gcs-release
+    type: gcs-resource
+    source:
+      bucket: cflab-concourse-bucket
+      json_key: |
+        {
+          "private_key_id": "409d7e0413a5fec836a84a47c6d791e497b04a8b",
+          "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCUQqYj3OqMSRU5\nV3fKI53SsX6+8LMaFpJyaW0jvAAeJeWApk31KHpCwE8Zz3mJ7oLayWDfBP2cm8jO\n3GJOiWFjmZ4dx5Hz8x4p/FswJD2PxWzSsmzF08ubM0aVowlEBw0pbTCMvWjtiuUd\n2oqA1XY0Jfu5I99ibgYDKbIM9bGgP29r+Mf6UMPN9D5Jk4TdvJbnb0RfAoozLASq\n2NUV022hXWPQTDfh40olyKE/Da5diei4x0biVFfCyljiEdXldrqgcuCQpSd68nhR\nsrFOg/gyeLH5c00Xwn8K0o772Xv0Jw76zAVAHSnQe0YKb3ycfW2SZ5liFt6L8XC2\nSSDAuK9DAgMBAAECggEAFTFqdAxDajaU4O5WvR+WkwR0pJEIsRfSlaXqCCZ6x9R3\n+DS4Rm1OU2tlA0Cr/s0INIPTzp11LqVQMPhs2bgmopOreAChUENg/PR0s9mCWU0J\n2hvPk6nLsY2aBJAv0Lhx/Ql9hqjEA9dhGqw03zy5mbO88MFReyL/cK/4TS+ef/70\nRXlXL52oYwKIzSB1OgTcZ4RgzsZ6PQeXUEAzr4IVWick6t4HSPkSete80iFZNUf4\nVLVBkOrc/doIEC2r1k7lL8P2cvs1uIGzHmeBErhYVqbYgC0AFIoa90ppvE9jgZC0\nh0ALyLz1qpA3LL66GFFajcdCjX/j9gguQtpYFlwUUQKBgQDNSkwPrfh+TUlG6omz\n+Ier5YkLMjIMhOqQiC+ijLau5VA1C6dUQP3Tqoar2AX4+5CK/u6iu6w3oawmYw5z\nK6TklwNW/1JbFW1ZkL36VdVHbDsXfj8kBhD3DmLb9/Y6llqOOZRaOuqdinzjCzx1\nkaxskIk/GE9RoqUp0o2Qvv0xcQKBgQC44gTW12erghdKG3BfQ07W4Cgr9ogOkOgz\nQLOXpIzIh30pGiQvl4EjnINBbJBM4d8NVwbBpl1qx5vt35Q3U8aeYJgks8TQJea9\nrYFQr7opWl9+TECJdBUTxgTMBaNFRn4a35Ruh5o0cMpVCLiEh32lz3FD2JJRvzA5\nBA/LNp5R8wKBgHI6LwxibuxIMMfG5QxA86zQMWsLaRHSO3pkbKzzwwqaCgEaFOcq\nqpHGRt0DfH9H6uuMYlgmOPNTgChz4axv0nZnGLKlqruHtqqpgSvz6pKtREwUMSno\nPjRZyuQ+msGKu6R7oXJ7aeRzFH542BFLFzfpTJTRAAGakHAu+hpaSyPhAoGAHSLB\nUHoxxD2EHhGk695XllVM/2CioGkFrs4Lf2JXLWLsvoV4Hmfp2grYRH8vXm5aEGge\nkHX/UsySLjKF0RJKwrrGP0J1SbgvXMTzFBwdYlbzpZuur/qzN6KFLwHUcR5i0Sla\n4vBLxOfhevUc3wXbLz45w09l/6v5lYKmWogI+zECgYA/HwYP/34vIDPubiGN+wOK\nAP4y7I2VzWy5TFjLMdZ4SFWGKYq+iH4J0mBcTFZfazLSFkN4WWUBBlPCRFtL4BWv\nq0bXFTuMR+YdkCxfCoWm0/7LP3bdQYPAz/Sn2/gXpaHj9PI8qVevSpBQc7J5W6Db\n+wWtN++1xiaxlofwJ5lfdw==\n-----END PRIVATE KEY-----\n",
+          "client_email": "ser-532@cflab-master.iam.gserviceaccount.com",
+          "client_id": "111323937001224578189",
+          "type": "service_account"
+        }
+      versioned_file: app-test.apk
  
 jobs:
   - name: build-and-deploy
@@ -34,7 +51,12 @@ jobs:
         - get: project-source
       - task: build
         file: project-source/ci/build.yml
-      - put: hockey
-        params:
-          path: build-output/app.apk
-          downloadable: true
+      - aggregate:
+        - put: hockey
+          params:
+            path: build-output/app.apk
+            downloadable: true
+        - put: gcs-release
+          params:
+            file: build-output/app.apk
+            predefined_acl: bucketOwnerFullControl
